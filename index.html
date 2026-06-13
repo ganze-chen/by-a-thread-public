@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>一线 · By a Thread</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   By a Thread 一线 — tokens (colors · type · spacing · effects)
+   ============================================================ */
+:root{
+  --ink-900:#1c1813; --ink-700:#2c251d; --ink-500:#4a4035; --ink-300:#7a6f60; --ink-150:#a89c89;
+  --parchment-050:#f4efe3; --parchment-100:#ece5d6; --parchment-200:#e2d9c6; --parchment-300:#d4c8b0;
+  --amber-700:#8a5a22; --amber-500:#b9823a; --amber-300:#d2a564; --amber-150:#e4ca9b;
+  --rust-700:#7a2c19; --rust-500:#9e3b26; --rust-300:#c06a52; --rust-150:#dda692;
+  --concrete-700:#565049; --concrete-500:#837c71; --concrete-300:#aaa295; --concrete-150:#c8c1b4;
+  --celadon-500:#8a936e; --celadon-300:#aab28c; --celadon-150:#c8cdb2;
+  --teal-500:#5f8279; --teal-300:#89a59c; --rose-500:#bd8175; --rose-300:#d4a89e;
+  --bone-100:#efe9dc; --bone-050:#f7f2e8;
+  --bg-page:var(--parchment-100); --bg-page-deep:#e6ddca;
+  --surface-card:var(--parchment-050); --surface-inset:var(--parchment-200);
+  --text-primary:var(--ink-700); --text-secondary:var(--ink-500); --text-muted:var(--ink-300); --text-faint:var(--ink-150);
+  --text-on-dark:var(--bone-100); --text-on-dark-muted:#b3a892;
+  --thread:var(--ink-700); --thread-faint:var(--ink-150); --thread-cut:var(--rust-500);
+  --accent-becker:var(--amber-500); --accent-hesse:var(--rust-500); --accent-life:var(--celadon-500); --accent-cool:var(--teal-500);
+  --border-hair:var(--ink-150); --border-soft:var(--parchment-300); --border-strong:var(--ink-500); --border-on-dark:rgba(239,233,220,0.22);
+  --focus-ring:var(--rust-500);
+  --data-becker:var(--amber-500); --data-becker-soft:var(--amber-150); --data-hesse:var(--rust-500); --data-hesse-soft:var(--rust-150);
+  --data-axis:var(--ink-300); --data-grid:var(--parchment-300); --data-war:var(--ink-900);
+  /* type */
+  --font-display:'Cormorant Garamond','Noto Serif SC',Georgia,serif;
+  --font-serif-cjk:'Noto Serif SC','Songti SC','Cormorant Garamond',serif;
+  --font-body:'Noto Serif SC','Cormorant Garamond',Georgia,serif;
+  --font-mono:'IBM Plex Mono','Noto Sans SC',ui-monospace,monospace;
+  --font-label:'IBM Plex Mono','Noto Sans SC',sans-serif;
+  --text-display:clamp(2.6rem,4.5vw,4rem); --text-lede:1.3125rem; --text-body:1.0625rem;
+  --text-caption:0.8125rem; --text-micro:0.6875rem;
+  --weight-thin:300; --weight-regular:400; --weight-medium:500; --weight-semibold:600;
+  --leading-tight:1.08; --leading-snug:1.32; --leading-body:1.85; --leading-loose:2.0;
+  --tracking-label:0.22em; --tracking-cjk-label:0.32em;
+  /* spacing */
+  --space-2:0.5rem; --space-3:0.75rem; --space-4:1rem; --space-5:1.5rem; --space-6:2rem;
+  --space-7:3rem; --space-8:4rem; --space-9:6rem; --space-10:8rem; --space-11:12rem;
+  --radius-sm:2px; --radius-md:3px;
+  --line-hair:0.5px; --line-thin:1px; --line-medium:1.5px; --line-thread:2px;
+  --measure-text:38rem; --measure-narrow:28rem; --page-max:1280px;
+  --page-gutter:clamp(1.5rem,5vw,6rem);
+  /* effects */
+  --shadow-pin:0 1px 2px rgba(28,24,19,0.10);
+  --shadow-card:0 2px 14px rgba(28,24,19,0.08);
+  --shadow-plate:0 10px 40px -12px rgba(28,24,19,0.30);
+  --vignette:radial-gradient(120% 100% at 50% 0%,transparent 55%,rgba(28,24,19,0.07) 100%);
+  --ease-thread:cubic-bezier(0.22,0.61,0.36,1); --ease-draw:cubic-bezier(0.65,0.05,0.36,1);
+  --ease-out-soft:cubic-bezier(0.16,1,0.3,1);
+  --dur-quick:220ms; --dur-base:480ms; --dur-breath:5200ms;
+}
+.nocturne{
+  --bg-page:var(--ink-900); --surface-card:#241e17; --surface-inset:#1a150f;
+  --text-primary:var(--bone-100); --text-secondary:#c4b9a4; --text-muted:#8d8270;
+  --thread:#cdbfa6; --thread-faint:#5b5141; --border-hair:rgba(239,233,220,0.18); --border-soft:rgba(239,233,220,0.10);
+}
+/* ---- base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg-page);color:var(--text-primary);font-family:var(--font-body);
+  font-size:var(--text-body);line-height:var(--leading-body);font-weight:var(--weight-regular);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:var(--weight-thin);line-height:var(--leading-snug);
+  letter-spacing:-0.01em;color:var(--text-primary);margin:0;text-wrap:balance}
+.cjk-head{font-family:var(--font-serif-cjk);font-weight:var(--weight-medium);letter-spacing:0.02em}
+p{margin:0 0 1.25em;max-width:var(--measure-text);text-wrap:pretty}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--thread-faint);
+  transition:border-color var(--dur-quick) var(--ease-thread),color var(--dur-quick) var(--ease-thread)}
+a:hover{border-color:var(--thread-cut);color:var(--rust-700)}
+:focus-visible{outline:none;box-shadow:0 0 0 2px var(--bg-page),0 0 0 3.5px var(--focus-ring)}
+.measure{max-width:var(--measure-text)} .measure-narrow{max-width:var(--measure-narrow)}
+.lede{font-size:var(--text-lede);line-height:var(--leading-loose);color:var(--text-secondary);max-width:var(--measure-text)}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--font-label);font-size:var(--text-micro);
+  letter-spacing:var(--tracking-label);text-transform:uppercase;color:var(--text-muted)}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.5;flex-shrink:0}
+.eyebrow .zh{font-family:var(--font-serif-cjk);letter-spacing:var(--tracking-cjk-label);text-transform:none;
+  font-size:var(--text-caption);opacity:.85}
+.eyebrow--ink{color:var(--ink-700)} .nocturne .eyebrow--ink{color:var(--bone-100)}
+.figure-year{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+/* paper field */
+.field{position:relative;background-color:var(--bg-page);background-image:var(--vignette)}
+.field::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.06;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.thread-line{height:var(--line-thread);width:100%;background:linear-gradient(90deg,transparent,var(--thread) 12%,var(--thread) 88%,transparent)}
+
+/* ============================================================
+   layout scaffold
+   ============================================================ */
+.bt-section{max-width:var(--page-max);margin:0 auto;padding:var(--space-10) var(--page-gutter);position:relative;z-index:1}
+.bt-section--inset{background:var(--bg-page-deep);max-width:none}
+.bt-section--inset>*{max-width:var(--page-max);margin-left:auto;margin-right:auto}
+.bt-section__head{margin-bottom:var(--space-8)}
+.bt-section__head h2{font-size:clamp(1.9rem,3.4vw,2.9rem);margin:var(--space-4) 0 var(--space-5)}
+.bt-section__intro{font-family:var(--font-serif-cjk);font-size:var(--text-lede);line-height:var(--leading-loose);color:var(--text-secondary)}
+
+/* scroll thread (left margin progress) */
+.bt-rail{position:fixed;left:max(18px,2.2vw);top:0;bottom:0;width:2px;z-index:40;pointer-events:none}
+.bt-rail__track{position:absolute;inset:0;background:var(--thread-faint);opacity:.35}
+.bt-rail__fill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(180deg,var(--amber-500),var(--rust-500))}
+.bt-rail__cut{position:absolute;left:-3px;width:8px;height:1.5px;background:var(--rust-500);opacity:0}
+@media(max-width:720px){.bt-rail{display:none}}
+
+/* ---- Hero ---- */
+.bt-hero{padding:var(--space-11) var(--page-gutter) var(--space-10);overflow:hidden}
+.bt-hero__inner{max-width:var(--page-max);margin:0 auto}
+.bt-hero__title{display:flex;align-items:baseline;gap:var(--space-6);flex-wrap:wrap;margin:var(--space-6) 0 var(--space-7)}
+.bt-hero__zh{font-family:var(--font-serif-cjk);font-weight:500;font-size:clamp(4rem,11vw,9rem);letter-spacing:.12em;color:var(--ink-900);line-height:.9}
+.bt-hero__en{font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(2rem,5vw,3.6rem);color:var(--ink-500);letter-spacing:-0.01em}
+.bt-hero__lede{margin-bottom:var(--space-8)}
+.bt-hero__thread{width:100%;height:110px;display:block;margin:var(--space-6) 0;overflow:visible}
+.bt-hero__feed,.bt-hero__cut{fill:none;stroke-width:2;stroke-linecap:round}
+.bt-hero__feed{stroke:var(--thread)} .bt-hero__cut{stroke:var(--thread-cut)}
+.bt-hero__names{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-6);
+  margin-top:var(--space-7);border-top:var(--line-hair) solid var(--border-hair);padding-top:var(--space-6)}
+.bt-hero__name{display:flex;flex-direction:column;gap:4px}
+.bt-hero__name--r{text-align:right;align-items:flex-end}
+.bt-hero__name .zh{font-family:var(--font-serif-cjk);font-size:1.25rem;color:var(--ink-700)}
+.bt-hero__name .en{font-family:var(--font-label);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.bt-hero__name .yr{font-family:var(--font-mono);font-size:.85rem;color:var(--amber-700);margin-top:4px}
+.bt-hero__name--r .yr{color:var(--rust-700)}
+.bt-hero__gap{text-align:center}
+.bt-hero__gap span:first-child{font-family:var(--font-display);font-size:2.6rem;font-weight:300;color:var(--ink-500);display:block;line-height:1}
+.bt-hero__gap .lab{font-family:var(--font-label);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint)}
+.bt-scroll-hint{margin-top:var(--space-8);font-family:var(--font-label);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-faint);display:flex;align-items:center;gap:10px}
+.bt-scroll-hint::after{content:"↓";font-size:.9rem}
+
+/* ---- Thesis (mirror) ---- */
+.bt-thesis__grid{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--space-6);align-items:center}
+.bt-thesis__axis{display:flex;flex-direction:column;align-items:center;gap:var(--space-3);min-width:130px}
+.bt-thesis__gaze{display:flex;flex-direction:column;align-items:center}
+.bt-thesis__gaze .line{width:2px;height:56px;background:linear-gradient(180deg,var(--amber-500),var(--rust-500))}
+.bt-thesis__gaze .dot{width:9px;height:9px;border-radius:50%}
+.bt-thesis__gaze .dot--a{background:var(--amber-500)} .bt-thesis__gaze .dot--b{background:var(--rust-500)}
+.bt-thesis__note{text-align:center;font-family:var(--font-serif-cjk);font-size:.95rem;color:var(--text-secondary);line-height:1.7;margin:0}
+.bt-thesis__note .mono{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.18em;color:var(--text-muted)}
+.bt-vthread{width:2px;height:160px;background:linear-gradient(180deg,transparent,var(--thread) 12%,var(--thread) 88%,transparent)}
+.bt-vthread--cut{background:linear-gradient(180deg,transparent,var(--thread) 30%,transparent 42%,transparent 58%,var(--thread-cut) 70%,transparent)}
+/* ArtworkPlate */
+.plate{margin:0}
+.plate__frame{position:relative;background:var(--bone-050);padding:8px;box-shadow:var(--shadow-plate)}
+.plate__frame img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.plate__cap{margin-top:14px;padding-left:12px;font-family:var(--font-label);font-size:var(--text-caption);
+  line-height:1.6;color:var(--text-muted);letter-spacing:.01em}
+.plate--becker .plate__cap{border-left:var(--line-thread) solid var(--amber-500)}
+.plate--hesse .plate__cap{border-left:var(--line-thread) solid var(--rust-500)}
+.plate__cap .artist{color:var(--ink-700);font-weight:500}
+.plate__cap .title{font-style:italic;font-family:var(--font-display);font-size:15px}
+.plate__cap .medium{display:block;color:var(--text-faint);font-size:11px}
+
+/* ============================================================
+   NEW · Field — the database starfield (scatter)
+   ============================================================ */
+.bt-field-wrap{position:relative;border:var(--line-hair) solid var(--border-soft);background:var(--surface-card);
+  box-shadow:var(--shadow-card);padding:var(--space-6) var(--space-6) var(--space-5)}
+.bt-field-canvaswrap{position:relative;width:100%;height:440px}
+.bt-field-canvaswrap canvas{position:absolute;inset:0;width:100%;height:100%}
+.bt-field__overlay{position:absolute;inset:0;pointer-events:none}
+.bt-anchor{position:absolute;transform:translate(-50%,-50%);pointer-events:auto}
+.bt-anchor__ring{width:14px;height:14px;border-radius:50%;border:2px solid var(--c);background:var(--bg-page);
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent);cursor:pointer}
+.bt-anchor__label{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center}
+.bt-anchor__label .zh{display:block;font-family:var(--font-serif-cjk);font-size:.82rem;color:var(--ink-700)}
+.bt-anchor__label .yr{font-family:var(--font-mono);font-size:.64rem;color:var(--c)}
+.bt-field__axis{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--font-mono);
+  font-size:.66rem;color:var(--text-faint);letter-spacing:.04em}
+.bt-field__foot{display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:center;margin-top:var(--space-4);
+  padding-top:var(--space-4);border-top:var(--line-hair) solid var(--border-soft)}
+.bt-legend{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-label);font-size:.7rem;letter-spacing:.06em;color:var(--text-muted)}
+.bt-legend .dot{width:9px;height:9px;border-radius:50%}
+.bt-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-label);
+  font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);cursor:pointer;
+  border:var(--line-thin) solid var(--border-strong);background:transparent;padding:7px 14px;border-radius:var(--radius-sm);
+  transition:all var(--dur-quick) var(--ease-thread)}
+.bt-toggle[aria-pressed="true"]{border-color:var(--rust-500);color:var(--rust-700);background:var(--rust-150)}
+.bt-field__stat{font-family:var(--font-serif-cjk);font-size:.92rem;color:var(--text-secondary)}
+.bt-field__stat b{font-family:var(--font-mono);color:var(--rust-700);font-weight:500}
+
+/* ============================================================
+   NEW · Chronology — interactive lifelines × war
+   ============================================================ */
+.bt-chrono{background:var(--surface-card);border:var(--line-hair) solid var(--border-soft);
+  padding:var(--space-7);box-shadow:var(--shadow-card)}
+.bt-chrono__legend{display:flex;align-items:center;gap:var(--space-5);flex-wrap:wrap;margin-bottom:var(--space-6);
+  font-family:var(--font-label);font-size:.7rem;letter-spacing:.06em;color:var(--text-muted)}
+.bt-chrono__legend .k{display:inline-flex;align-items:center;gap:8px}
+.swatch{width:16px;height:10px;display:inline-block}
+.swatch--war{background:var(--ink-900);opacity:.16}
+.swatch--shoah{background:repeating-linear-gradient(45deg,var(--rust-700),var(--rust-700) 2px,transparent 2px,transparent 5px);opacity:.7}
+.swatch--star{width:10px;height:10px;background:var(--amber-500);transform:rotate(45deg)}
+.swatch--cut{color:var(--rust-500);font-family:var(--font-mono)}
+.bt-chrono__plot{position:relative;width:100%;height:360px;margin-top:var(--space-4)}
+.bt-chrono__hint{font-family:var(--font-label);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint);margin-left:auto}
+.bt-evt{position:absolute;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;
+  border:1.5px solid var(--c);background:var(--bg-page);cursor:pointer;z-index:3;
+  transition:transform var(--dur-quick) var(--ease-thread),box-shadow var(--dur-quick)}
+.bt-evt:hover,.bt-evt[aria-selected="true"]{transform:translate(-50%,-50%) scale(1.5);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
+.bt-evt--star{border-radius:0;transform:translate(-50%,-50%) rotate(45deg)}
+.bt-evt--star:hover,.bt-evt--star[aria-selected="true"]{transform:translate(-50%,-50%) rotate(45deg) scale(1.5)}
+.bt-evt--cut{border-color:var(--rust-500);background:var(--rust-500)}
+.bt-evt--world{border-color:var(--ink-300);width:9px;height:9px}
+.bt-chrono__detail{margin-top:var(--space-6);border-top:var(--line-hair) solid var(--border-soft);padding-top:var(--space-5);
+  display:grid;grid-template-columns:auto 1fr;gap:var(--space-5);min-height:120px}
+.bt-detail__year{font-family:var(--font-mono);font-size:2.2rem;color:var(--ink-500);font-variant-numeric:tabular-nums;line-height:1}
+.bt-detail__year .lane{display:block;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;margin-top:8px}
+.bt-detail__body h4{font-family:var(--font-serif-cjk);font-weight:500;font-size:1.15rem;color:var(--ink-700);margin:0 0 4px}
+.bt-detail__body .en{font-family:var(--font-label);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.bt-detail__body p{font-family:var(--font-serif-cjk);font-size:1rem;line-height:1.95;color:var(--text-secondary);margin:0;max-width:46rem}
+
+/* ============================================================
+   NEW · Diptych — visual feature comparison
+   ============================================================ */
+.bt-diptych__poles{display:flex;justify-content:space-between;margin-bottom:var(--space-5)}
+.bt-diptych__poles .pole{font-family:var(--font-label);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+.pole--becker{color:var(--amber-700)} .pole--hesse{color:var(--rust-700)}
+.bt-pal{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6);margin-bottom:var(--space-8)}
+.bt-pal__col .lab{font-family:var(--font-label);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.bt-pal__bar{display:flex;height:46px;border:var(--line-hair) solid var(--border-soft)}
+.bt-pal__bar span{height:100%}
+.bt-diptych__bars{display:flex;flex-direction:column;gap:var(--space-5)}
+.bt-dbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.bt-dbar__l{display:flex;justify-content:flex-end;align-items:center;gap:10px}
+.bt-dbar__r{display:flex;justify-content:flex-start;align-items:center;gap:10px}
+.bt-dbar__fill{height:20px}
+.bt-dbar__l .bt-dbar__fill{background:var(--amber-500);border-radius:var(--radius-sm) 0 0 var(--radius-sm)}
+.bt-dbar__r .bt-dbar__fill{background:var(--rust-500);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.bt-dbar__val{font-family:var(--font-mono);font-size:12px;font-variant-numeric:tabular-nums}
+.bt-dbar__l .bt-dbar__val{color:var(--amber-700)} .bt-dbar__r .bt-dbar__val{color:var(--rust-700)}
+.bt-dbar__c{padding:0 16px;text-align:center;min-width:130px}
+.bt-dbar__c .zh{font-family:var(--font-serif-cjk);font-size:13px;color:var(--ink-700);white-space:nowrap}
+.bt-dbar__c .en{font-family:var(--font-label);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-top:2px;white-space:nowrap}
+.bt-dbar__c .win{font-size:8.5px}
+.bt-radar{display:block;margin:0 auto}
+.bt-twocol{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--space-9);align-items:center;margin-top:var(--space-8)}
+.bt-twocol h3{font-family:var(--font-serif-cjk);font-weight:500;font-size:1.3rem;color:var(--ink-700);margin:0 0 var(--space-4)}
+.bt-twocol p{font-family:var(--font-serif-cjk);font-size:1rem;line-height:1.95;color:var(--text-secondary)}
+.bt-moma{margin-top:var(--space-9);border-top:var(--line-hair) solid var(--border-soft);padding-top:var(--space-7)}
+.bt-moma__grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);margin-top:var(--space-5)}
+.bt-moma__col .who{font-family:var(--font-label);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--space-4)}
+.bt-moma__row{display:grid;grid-template-columns:1fr 64px;gap:10px;align-items:center;margin-bottom:10px}
+.bt-moma__row .name{font-family:var(--font-serif-cjk);font-size:.86rem;color:var(--text-secondary)}
+.bt-moma__track{height:8px;background:var(--surface-inset);position:relative}
+.bt-moma__track i{position:absolute;left:0;top:0;bottom:0}
+.bt-moma__row .n{font-family:var(--font-mono);font-size:.72rem;color:var(--text-muted);text-align:right}
+
+/* ===== Theme-Twins charts: compass · legend · orbits ===== */
+.tt-stage{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,0.95fr);gap:var(--space-8) var(--space-9);align-items:center;background:var(--surface-card);border:var(--line-hair) solid var(--border-soft);box-shadow:var(--shadow-card);padding:var(--space-8) var(--space-8) var(--space-7)}
+.tt-poles{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:var(--line-hair) solid var(--border-hair);padding-bottom:var(--space-4);margin-bottom:var(--space-2)}
+.tt-pole{display:flex;flex-direction:column;gap:5px}
+.tt-pole--h{text-align:right;align-items:flex-end}
+.tt-pole__name{font-family:var(--font-label);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+.tt-pole--b .tt-pole__name{color:var(--amber-700)} .tt-pole--h .tt-pole__name{color:var(--rust-700)}
+.tt-pole__tag{font-family:var(--font-serif-cjk);font-size:.92rem;color:var(--text-secondary);white-space:nowrap}
+.tt-pole__line{display:inline-flex;align-items:center;gap:8px;margin-top:2px;white-space:nowrap}
+.tt-pole__mono{font-family:var(--font-mono);font-size:.7rem;color:var(--text-muted)}
+.tt-pole__sw{width:26px;height:7px;border-radius:1px}
+.tt-pole--b .tt-pole__sw{background:var(--amber-500)} .tt-pole--h .tt-pole__sw{background:var(--rust-500)}
+.tt-compass{display:flex;flex-direction:column;align-items:center}
+.gc{width:100%;max-width:460px;height:auto;display:block;overflow:visible}
+.gc-axis-cap{font-family:var(--font-label);font-size:9px;letter-spacing:.18em;text-transform:uppercase;fill:var(--text-faint)}
+.gc-vals text{font-family:var(--font-mono);font-size:12px;fill:var(--ink-700);font-variant-numeric:tabular-nums}
+.gc-mode{font-family:var(--font-label);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-top:var(--space-3);text-align:center}
+.gc-mode b{color:var(--text-secondary);font-weight:500}
+.leg{list-style:none;margin:0;padding:0}
+.leg-row{display:grid;grid-template-columns:20px 1fr 38% auto;align-items:center;gap:12px;padding:var(--space-3) var(--space-2);border-top:var(--line-hair) solid var(--border-hair);transition:background var(--dur-quick) var(--ease-thread)}
+.leg-row:last-child{border-bottom:var(--line-hair) solid var(--border-hair)}
+.leg-row.is-on{background:var(--surface-inset)}
+.leg-idx{font-family:var(--font-mono);font-size:.7rem;color:var(--text-faint)}
+.leg-name{display:flex;flex-direction:column}
+.leg-name .zh{font-family:var(--font-serif-cjk);font-size:.98rem;color:var(--ink-700)}
+.leg-name .en{font-family:var(--font-label);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.leg-bar{display:flex;align-items:center;height:7px}
+.leg-bar__half{flex:1;height:7px;display:flex;background:var(--parchment-200)}
+.leg-bar__half--l{justify-content:flex-end;border-right:1px solid var(--bg-page)}
+.leg-fill{height:7px;display:block}
+.leg-fill--b{background:var(--amber-500)} .leg-fill--h{background:var(--rust-500)}
+.leg-vals{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--font-mono);font-size:.72rem;font-variant-numeric:tabular-nums;line-height:1.45}
+.leg-vals .b{color:var(--amber-700)} .leg-vals .h{color:var(--rust-700)}
+.bt-compass-note{max-width:var(--measure-text);margin-top:var(--space-7)}
+.bt-compass-note h3{font-family:var(--font-serif-cjk);font-weight:500;font-size:1.3rem;color:var(--ink-700);margin:0 0 var(--space-4)}
+.bt-compass-note p{font-family:var(--font-serif-cjk);font-size:1rem;line-height:1.95;color:var(--text-secondary)}
+.tt-orbits-block{margin-top:var(--space-9)}
+.tt-orbits-block .eyebrow{margin-bottom:var(--space-6)}
+.tt-orbits{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-7) var(--space-6);justify-items:center;margin-top:var(--space-4)}
+.orb{margin:0;display:flex;flex-direction:column;align-items:center;max-width:420px}
+.orb-stage{position:relative;width:100%;max-width:380px;aspect-ratio:1}
+.orb-art{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;object-fit:cover;box-shadow:var(--shadow-plate);filter:saturate(.96)}
+.orb-svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.orb-hex{font-family:var(--font-mono);font-size:9px;letter-spacing:.02em;fill:var(--text-muted);font-variant-numeric:tabular-nums;transition:fill .2s var(--ease-thread)}
+.orb-hex.is-on{fill:var(--ink-700);font-weight:600}
+.orb-pole{font-family:var(--font-serif-cjk);font-size:12px;fill:var(--bone-050);paint-order:stroke;stroke:rgba(28,24,19,0.25);stroke-width:.5px;opacity:.9}
+.orb-cap{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:var(--space-3);text-align:center}
+.orb-cap__name{display:flex;flex-direction:column;gap:2px;padding-left:12px;padding-right:12px;border-left:var(--line-thread) solid var(--amber-500)}
+.orb-cap__name .zh{font-family:var(--font-label);font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-700);white-space:nowrap}
+.orb-cap__name .en{font-family:var(--font-label);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.orb-cap__work{font-family:var(--font-label);font-size:var(--text-caption);color:var(--text-muted)}
+.orb-cap__work em{font-family:var(--font-display);font-style:italic;font-size:1rem;color:var(--text-secondary)}
+.orb-cap__work .yr{font-family:var(--font-mono)}
+.orb-cap__read{display:inline-flex;align-items:center;gap:8px;min-height:1.2em;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.03em;color:var(--text-secondary)}
+.orb-cap__read .dot{width:11px;height:11px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(28,24,19,0.12)}
+@media(max-width:900px){.tt-stage{grid-template-columns:1fr}.tt-orbits{grid-template-columns:1fr}}
+
+/* Pullquote */
+.bt-pq{margin:0 auto;max-width:34ch;text-align:center}
+.bt-pq .rule{display:block;width:48px;height:var(--line-thread);background:var(--thread-cut);margin:0 auto 26px}
+.bt-pq p{font-family:var(--font-display);font-weight:300;font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.32;color:var(--ink-700);margin:0;text-wrap:balance}
+.nocturne .bt-pq p{color:var(--bone-100)}
+.bt-pq footer{margin-top:22px;font-family:var(--font-label);font-size:var(--text-caption);letter-spacing:.06em;color:var(--text-muted)}
+
+/* ---- Interlude (Valadon framing) ---- */
+.bt-interlude__body{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8);align-items:start}
+.bt-interlude__body p{font-family:var(--font-serif-cjk);font-size:1.02rem;line-height:1.95;color:var(--text-secondary)}
+.bt-vcard{border:var(--line-hair) solid var(--border-soft);background:var(--surface-card);padding:var(--space-6);box-shadow:var(--shadow-card)}
+.bt-vcard .name{font-family:var(--font-serif-cjk);font-weight:500;font-size:1.2rem;color:var(--ink-700)}
+.bt-vcard .en{font-family:var(--font-label);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin:4px 0 var(--space-4)}
+.bt-vcard .yr{font-family:var(--font-mono);color:var(--amber-700);font-size:.85rem}
+.bt-vcard__note{font-family:var(--font-label);font-size:.66rem;letter-spacing:.06em;color:var(--text-faint);margin-top:var(--space-4);border-top:var(--line-hair) solid var(--border-soft);padding-top:var(--space-3)}
+
+/* ---- Coda ---- */
+.bt-coda{position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden}
+.bt-coda__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(.2) brightness(.62) contrast(1.05)}
+.bt-coda__veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,17,13,.94) 0%,rgba(20,17,13,.74) 48%,rgba(20,17,13,.32) 100%)}
+.bt-coda__inner{position:relative;max-width:640px;margin-left:var(--page-gutter);padding:var(--space-9) var(--page-gutter) var(--space-9) 0}
+.bt-coda__inner>*+*{margin-top:var(--space-5)}
+.bt-coda__body{font-family:var(--font-serif-cjk);font-size:1.05rem;line-height:2;color:var(--text-secondary);max-width:34rem}
+.bt-coda__credit{font-family:var(--font-label);font-size:.68rem;letter-spacing:.06em;line-height:1.7;color:var(--text-muted);margin-top:var(--space-7)}
+.bt-coda__credit strong{color:var(--text-on-dark-muted);font-weight:500}
+.bt-coda__credit a{color:var(--text-on-dark-muted);border-bottom:1px solid rgba(239,233,220,0.28)}
+.bt-coda__credit a:hover{color:var(--rust-300);border-color:var(--rust-300)}
+.bt-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:18px;
+  color:var(--bone-100);border-bottom:1px solid var(--thread-faint);padding:4px 0;transition:all var(--dur-quick) var(--ease-thread)}
+.bt-btn:hover{border-bottom-color:var(--thread-cut);color:var(--rust-300)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease-out-soft),transform .9s var(--ease-out-soft)}
+.reveal.in{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:no-preference){
+  .bt-hero__feed{stroke-dasharray:1400;stroke-dashoffset:1400;animation:bt-draw 2.6s var(--ease-draw) forwards}
+  .bt-hero__cut{stroke-dasharray:1400;stroke-dashoffset:1400;animation:bt-draw 2.2s var(--ease-draw) 1.4s forwards}
+  @keyframes bt-draw{to{stroke-dashoffset:0}}
+  @keyframes tremble{0%,100%{transform:translate(0,0)}25%{transform:translate(.4px,-.3px)}50%{transform:translate(-.3px,.4px)}75%{transform:translate(.2px,.2px)}}
+  .tremble{animation:tremble var(--dur-breath) var(--ease-thread) infinite}
+}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+
+/* responsive */
+@media(max-width:860px){
+  .bt-thesis__grid{grid-template-columns:1fr;justify-items:center;gap:var(--space-8)}
+  .bt-thesis__axis{flex-direction:row;min-width:0;padding:var(--space-4) 0}
+  .bt-vthread{width:120px;height:2px;background:linear-gradient(90deg,transparent,var(--thread) 12%,var(--thread) 88%,transparent)}
+  .bt-vthread--cut{background:linear-gradient(90deg,transparent,var(--thread) 30%,transparent 42%,transparent 58%,var(--thread-cut) 70%,transparent)}
+  .bt-thesis__gaze{flex-direction:row}.bt-thesis__gaze .line{width:56px;height:2px}
+  .bt-hero__names{grid-template-columns:1fr;text-align:left}
+  .bt-hero__name--r{text-align:left;align-items:flex-start}.bt-hero__gap{text-align:left}
+  .bt-twocol,.bt-pal,.bt-moma__grid,.bt-interlude__body{grid-template-columns:1fr;gap:var(--space-6)}
+  .bt-chrono__detail{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="bt-page">
+
+<!-- left scroll-thread -->
+<div class="bt-rail" aria-hidden="true">
+  <div class="bt-rail__track"></div>
+  <div class="bt-rail__fill" id="railFill"></div>
+  <div class="bt-rail__cut" id="railCut"></div>
+</div>
+
+<main>
+  <!-- ========================= HERO ========================= -->
+  <header class="bt-hero field">
+    <div class="bt-hero__inner">
+      <span class="eyebrow">A Data Visualisation<span class="zh">数据可视化 · 艺术 · 战争 · 人生</span></span>
+      <h1 class="bt-hero__title">
+        <span class="bt-hero__zh">一线</span>
+        <span class="bt-hero__en">By&nbsp;a&nbsp;Thread</span>
+      </h1>
+      <p class="bt-hero__lede lede">
+        两位德国出身的女性，都让“身体”成为各自时代里最激进的突破口，
+        都在创作攀至顶峰时天才早逝。一条线把她们系在一起——
+        它输送生命，也能勒断生命；而战争，是那把剪刀。
+      </p>
+      <svg class="bt-hero__thread" viewBox="0 0 1100 120" preserveAspectRatio="none" aria-hidden="true">
+        <path class="bt-hero__feed" d="M20,60 C 240,60 280,22 440,22 C 540,22 552,96 600,96"/>
+        <path class="bt-hero__cut" d="M620,96 C 660,96 660,26 760,26 C 920,26 960,60 1080,60"/>
+      </svg>
+      <div class="bt-hero__names">
+        <div class="bt-hero__name">
+          <span class="zh">保拉·莫德松-贝克尔</span>
+          <span class="en">Paula Modersohn-Becker</span>
+          <span class="yr">1876 — 1907</span>
+        </div>
+        <div class="bt-hero__gap"><span>59</span><span class="lab">years apart</span></div>
+        <div class="bt-hero__name bt-hero__name--r">
+          <span class="zh">伊娃·黑塞</span>
+          <span class="en">Eva Hesse</span>
+          <span class="yr">1936 — 1970</span>
+        </div>
+      </div>
+      <div class="bt-scroll-hint">向下，沿着这根线 · follow the thread</div>
+    </div>
+  </header>
+
+  <!-- ===================== MIRROR THESIS ===================== -->
+  <section class="bt-section field" id="thesis">
+    <div class="bt-section__head reveal">
+      <span class="eyebrow">Chapter I · The Twin Gift<span class="zh">天赐礼物</span></span>
+      <h2 class="cjk-head">配对论点的天赐礼物——构图几乎是镜像的</h2>
+      <p class="bt-section__intro measure">
+        Becker《结婚六周年自画像》那对乳房 + 孕腹的双圆形，
+        与 Hesse《Ring Around Arosie》上下叠置的双圆乳状体，
+        几乎在隔着五十九年互相凝视；连暖色调——琥珀／赭红
+        对肤色／铁锈——都彼此呼应。视觉孪生在这里是自明的。
+      </p>
+    </div>
+    <div class="bt-thesis__grid reveal">
+      <figure class="plate plate--becker">
+        <div class="plate__frame"><img src="assets/artworks/becker-self-portrait-6th-anniversary-1906.jpg" alt="Paula Modersohn-Becker, Self-Portrait on her 6th Wedding Anniversary, 1906"></div>
+        <figcaption class="plate__cap"><span class="artist">Paula Modersohn-Becker</span> <span class="title">· 结婚六周年自画像</span> 1906<span class="medium">Tempera · 101.5 × 70.2 cm</span></figcaption>
+      </figure>
+      <div class="bt-thesis__axis" aria-hidden="true">
+        <div class="bt-vthread"></div>
+        <div class="bt-thesis__gaze"><span class="dot dot--a"></span><span class="line"></span><span class="dot dot--b"></span></div>
+        <p class="bt-thesis__note">双圆 ◂ ▸ 双圆<br><span class="mono">TWO CIRCLES, GAZING</span></p>
+        <div class="bt-vthread bt-vthread--cut"></div>
+      </div>
+      <figure class="plate plate--hesse">
+        <div class="plate__frame"><img src="assets/artworks/hesse-ring-around-arosie-1965.png" alt="Eva Hesse, Ring Around Arosie, 1965" style="object-position:center 35%"></div>
+        <figcaption class="plate__cap"><span class="artist">Eva Hesse</span> <span class="title">· Ring Around Arosie</span> 1965<span class="medium">Varnish, ink, enamel, cord on board</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== FIELD / SCATTER ===================== -->
+  <section class="bt-section bt-section--inset field" id="field">
+    <div class="bt-section__head reveal">
+      <span class="eyebrow">Chapter II · Drawn from the Field<span class="zh">星海之中</span></span>
+      <h2 class="cjk-head">她们，是从一整片星海里被筛出的</h2>
+      <p class="bt-section__intro measure">
+        这两位女性并非孤例。下面每一个微点，都是馆藏数据库里的一位艺术家，
+        按出生年排布在时间的横轴上。绝大多数是男性——淡若尘埃；
+        女性寥寥，是其中罕见的亮点。我们追随的三个名字，
+        正是从这片不平等的星海中被打捞出来的。
+      </p>
+    </div>
+    <div class="bt-field-wrap reveal">
+      <div class="bt-field-canvaswrap">
+        <canvas id="fieldCanvas"></canvas>
+        <div class="bt-field__overlay" id="fieldOverlay"></div>
+      </div>
+      <div class="bt-field__axis" id="fieldAxis"></div>
+      <div class="bt-field__foot">
+        <span class="bt-legend"><span class="dot" style="background:var(--ink-150)"></span>男性 male</span>
+        <span class="bt-legend"><span class="dot" style="background:var(--rust-500)"></span>女性 female</span>
+        <span class="bt-field__stat" id="fieldStat"></span>
+        <button class="bt-toggle" id="fieldToggle" aria-pressed="false">只看女性 · isolate women</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CHRONOLOGY ===================== -->
+  <section class="bt-section field" id="chronology">
+    <div class="bt-section__head reveal">
+      <span class="eyebrow">Chapter III · A Severed Century<span class="zh">时间轴</span></span>
+      <h2 class="cjk-head">两条命线，同一个剪刀</h2>
+      <p class="bt-section__intro measure">
+        一个被肉身放逐，一个被作品放逐。Becker 在产后第二十天倒下；
+        Hesse 三十四岁死于脑瘤。她出生的祖国所酝酿的灾难，
+        把还是孩童的她逐出国门；而早一代的先驱虽未亲历，
+        却在身后被同一场灾难抹去。点击线上的节点，放大每一个交汇处。
+      </p>
+    </div>
+    <div class="bt-chrono reveal">
+      <div class="bt-chrono__legend">
+        <span class="k"><span class="swatch swatch--war"></span>战争年代 · war years</span>
+        <span class="k"><span class="swatch swatch--shoah"></span>大屠杀 · Shoah</span>
+        <span class="k"><span class="swatch swatch--star"></span>三度呼应 · the rhymes</span>
+        <span class="k"><span class="swatch--cut">✂</span> 剪断 · death / purge</span>
+        <span class="bt-chrono__hint">click a node ↗</span>
+      </div>
+      <div class="bt-chrono__plot" id="chronoPlot"></div>
+      <div class="bt-chrono__detail" id="chronoDetail"></div>
+    </div>
+  </section>
+
+  <!-- ===================== DIPTYCH DATA ===================== -->
+  <section class="bt-section bt-section--inset field" id="diptych">
+    <div class="bt-section__head reveal">
+      <span class="eyebrow">Chapter IV · Measured Against Each Other<span class="zh">对照</span></span>
+      <h2 class="cjk-head">主题孪生，视觉反转</h2>
+      <p class="bt-section__intro measure">
+        把两人的代表作交给同一套机器之眼——主导色、亮度、边缘与角点。
+        结论出人意料：构图与母题上她们是双胞胎，视觉气质上却互为镜像。
+        Becker 一侧温暖、饱和、绘画性；Hesse 一侧冷峻、明亮、结构繁复。
+        二十世纪的灾难，仿佛把身体里的暖色一点点抽干。
+      </p>
+    </div>
+
+    <!-- Group 1 · 孪生罗盘:双圆罗盘 + 编号精读(替代条形 + 雷达) -->
+    <div class="tt-stage reveal">
+      <div class="tt-poles">
+        <div class="tt-pole tt-pole--b">
+          <span class="tt-pole__name">Modersohn-Becker</span>
+          <span class="tt-pole__tag">温暖 · 饱和 · 绘画性</span>
+          <span class="tt-pole__line"><span class="tt-pole__sw"></span><span class="tt-pole__mono">12 works · 向左 ◂</span></span>
+        </div>
+        <div class="tt-pole tt-pole--h">
+          <span class="tt-pole__name">Eva Hesse</span>
+          <span class="tt-pole__tag">冷峻 · 明亮 · 结构繁复</span>
+          <span class="tt-pole__line"><span class="tt-pole__mono">▸ 向右 · 6 works</span><span class="tt-pole__sw"></span></span>
+        </div>
+      </div>
+      <div class="tt-compass">
+        <svg class="gc" id="gravidCompass" viewBox="0 0 600 600" role="img" aria-label="孪生视觉签名 · 双圆罗盘"></svg>
+        <div class="gc-mode">外环暖色母题 · 内环结构母题 — 归一化：<b>对照全部 18 件作品</b></div>
+      </div>
+      <ul class="leg" id="featureLegend"></ul>
+    </div>
+
+    <div class="bt-compass-note reveal">
+      <h3>一边暖，一边亮</h3>
+      <p>
+        在这张罗盘上，Becker（琥珀）的弧几乎占满“暖色／饱和／色彩丰富”的一端，
+        Hesse（铁锈）则伸向“明度／边缘／角点”的另一端——一组近乎完美的互补。
+        <br><br>
+        <span style="font-family:var(--font-label);font-size:.72rem;letter-spacing:.04em;color:var(--text-muted)">
+        注 · 仅 18 张代表作的均值；此处的“完美互补”部分源于两点归一化的几何必然，
+        真正可信的是原始数值差（暖色占比 0.49 ↔ 0.23）。
+        </span>
+      </p>
+    </div>
+
+    <!-- Group 2 · 主导色环:把主导色从画里吸出、缠绕在作品四周(替代色卡) -->
+    <div class="tt-orbits-block reveal">
+      <span class="eyebrow">Signature palettes<span class="zh">主导色</span></span>
+      <div class="tt-orbits" id="paletteOrbits"></div>
+    </div>
+
+    <div class="bt-moma reveal">
+      <span class="eyebrow">In MoMA's space<span class="zh">在美术馆的空间位置</span></span>
+      <p class="measure" style="font-family:var(--font-serif-cjk);color:var(--text-secondary);margin-top:var(--space-4)">
+        即便进了同一座现代美术馆，两人被归入的“位置”也截然不同——
+        Becker 仅以寥寥几张<strong>版画</strong>侧身其间（她的油画杰作并不在此）；
+        Hesse 则以<strong>素描与雕塑</strong>进场。馆藏的策展归类，本身就是一种命运。
+      </p>
+      <div class="bt-moma__grid" id="momaGrid"></div>
+    </div>
+
+    <div class="bt-pq reveal" style="margin-top:var(--space-10)">
+      <span class="rule"></span>
+      <p>孕育与断裂，本就是同一根线的两端。</p>
+      <footer><span style="font-family:var(--font-serif-cjk);margin-right:10px">《一线》</span>thesis</footer>
+    </div>
+  </section>
+
+  <!-- ===================== INTERLUDE (Valadon) ===================== -->
+  <section class="bt-section field" id="interlude">
+    <div class="bt-section__head reveal">
+      <span class="eyebrow">Interlude · The Framing Voice<span class="zh">穿插</span></span>
+      <h2 class="cjk-head">更早的一束光：苏珊娜·瓦拉东</h2>
+    </div>
+    <div class="bt-interlude__body reveal">
+      <div>
+        <p>
+          在两位主线之前，另一位女性早已把“凝视”翻转过来。
+          Suzanne Valadon（1865–1938，法）洗衣女出身、做过马戏杂技、
+          当过雷诺阿与劳特累克的模特——从“被看”的身体，
+          长成“来看”的眼睛，是首位入选法国国家美术协会的女性。
+          她以浓烈的色彩与硬朗的轮廓画下不被美化的裸体，
+          正是 Becker 与 Hesse 之前，同一根线更早的一段。
+        </p>
+        <aside class="bt-vcard">
+          <div class="name">苏珊娜·瓦拉东</div>
+          <div class="en">Suzanne Valadon · 1865 — 1938 · FR</div>
+          <p style="font-family:var(--font-serif-cjk);font-size:.92rem;line-height:1.9;color:var(--text-secondary);margin-top:var(--space-4)">
+            作为叙事的“框架声部”，瓦拉东把主线的母题向前延展：
+            身体、凝视、与不肯被驯服的色彩。《蓝色房间》里那个叼着烟、
+            穿条纹裤、毫不取悦谁的女人，正是“女性凝视”最早的宣言之一。
+          </p>
+        </aside>
+      </div>
+      <figure class="plate plate--becker" style="margin:0">
+        <div class="plate__frame"><img src="assets/artworks/valadon-blue-room-1923.jpg" alt="Suzanne Valadon, The Blue Room (La Chambre bleue), 1923" style="aspect-ratio:4/3"></div>
+        <figcaption class="plate__cap"><span class="artist">Suzanne Valadon</span> <span class="title">· 蓝色房间 La Chambre bleue</span> 1923<span class="medium">Oil on canvas · 90 × 116 cm · Centre Pompidou</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== CODA ===================== -->
+  <section class="bt-coda nocturne" id="coda">
+    <img class="bt-coda__bg" src="assets/artworks/hesse-no-title-1970.jpg" alt="Eva Hesse, No title, 1970">
+    <div class="bt-coda__veil"></div>
+    <div class="bt-coda__inner">
+      <span class="eyebrow eyebrow--ink">Coda · 1970 · The Line Itself<span class="zh">尾声</span></span>
+      <div class="bt-pq" style="text-align:left;margin:0">
+        <span class="rule" style="margin-left:0"></span>
+        <p>那条缠绕的绳，正是从腹部生长出来、连着母与子的线。</p>
+      </div>
+      <p class="bt-coda__body">
+        它把一个女人系向她的孩子，也把她系进她的时代。
+        Hesse 最后的作品几乎只剩下线——下垂、缠绕、随气流颤动，
+        像无数条脐带同时被悬挂、被等待剪断。
+      </p>
+      <p class="bt-coda__body" style="color:var(--text-on-dark-muted);font-size:.95rem">
+        而这根线还在延伸。每接纳一位新的女性，
+        都是同一根线上又一个被悬起的生命、又一个被系上的结——
+        叙事随线生长，而名字纹丝不动。
+      </p>
+      <div><a class="bt-btn" href="#thesis">↑ 回到双圆 · Return to the gift</a></div>
+      <p class="bt-coda__credit">
+        《一线》 By a Thread · Modersohn-Becker ↔ Hesse ·
+        a data visualisation on bodies, war, and the umbilical line
+        <br><br>
+        作者 · Author <strong>Ganze Chen</strong>
+        <br><br>
+        本作品仅作非商业的学术 / 教育用途。图像：Paula Modersohn-Becker、Suzanne Valadon
+        作品属公有领域（via Wikimedia Commons）；Eva Hesse 作品 © The Estate of Eva Hesse，
+        在此依合理使用原则引用。视觉特征经 OpenCV 自提。
+        <br>
+        数据来源 Data ·
+        <a href="https://www.kaggle.com/datasets/momanyc/museum-collection?select=artworks.csv" target="_blank" rel="noopener">MoMA Collection (Kaggle)</a> ·
+        <a href="https://www.kaggle.com/datasets/mexwell/famous-paintings" target="_blank" rel="noopener">Famous Paintings (Kaggle)</a> ·
+        <a href="https://github.com/lucienxshi/art_auction_valuation" target="_blank" rel="noopener">art_auction_valuation</a>（参考指标维度）
+        <br>For educational, non-commercial use only · © respective rights holders.
+      </p>
+    </div>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  "use strict";
+  var D = window.BT_DATA;
+  var YEAR0 = 1840, YEAR1 = 1985;
+
+  /* ---------- shared year→x ---------- */
+  function pct(y){ return (y - YEAR0) / (YEAR1 - YEAR0); }
+
+  /* ---------- seeded jitter ---------- */
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+  /* ===================== FIELD SCATTER ===================== */
+  var canvas = document.getElementById('fieldCanvas');
+  var overlay = document.getElementById('fieldOverlay');
+  var ctx = canvas.getContext('2d');
+  var isolate = false;
+  // precompute points with stable jitter
+  var rnd = mulberry32(1965);
+  var pts = [];
+  D.scatter.m.forEach(function(b){ pts.push({b:b, g:0, jy:rnd(), jx:(rnd()-0.5)}); });
+  D.scatter.f.forEach(function(b){ pts.push({b:b, g:1, jy:rnd(), jx:(rnd()-0.5)}); });
+
+  function drawField(){
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    if(w<2 || h<2) return;                 // guard: never blank on a 0-size rebuild
+    var dpr = Math.min(2, window.devicePixelRatio||1);
+    canvas.width = w*dpr; canvas.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+    var padX = 16, padTop = 18, padBot = 22;
+    var plotW = w - padX*2, plotH = h - padTop - padBot;
+    for(var i=0;i<pts.length;i++){
+      var p = pts[i];
+      var x = padX + (pct(p.b) + p.jx*0.004) * plotW;
+      var y = padTop + p.jy*plotH;
+      var female = p.g===1;
+      if(isolate && !female){ continue; }
+      ctx.beginPath();
+      ctx.arc(x,y, female?2.1:1.5, 0, 6.2832);
+      if(female){ ctx.fillStyle='rgba(158,59,38,0.62)'; }
+      else{ ctx.fillStyle='rgba(122,111,96,0.24)'; }
+      ctx.fill();
+    }
+  }
+
+  var anchorEls = [];
+  function layoutAnchors(){
+    overlay.innerHTML='';
+    anchorEls = [];
+    var w = overlay.clientWidth, h = overlay.clientHeight;
+    var padX=16, padTop=18, padBot=22, plotH=h-padTop-padBot;
+    // fixed vertical slots so labels don't collide
+    var slot = {valadon:0.30, becker:0.52, hesse:0.74};
+    var colr = {valadon:'var(--amber-700)', becker:'var(--amber-500)', hesse:'var(--rust-500)'};
+    // connecting thread
+    var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('width','100%'); svg.setAttribute('height','100%');
+    svg.style.position='absolute'; svg.style.inset='0'; svg.style.overflow='visible';
+    var pathD=''; var coords={};
+    D.anchors.forEach(function(a){
+      var x = padX + pct(a.birth)*(w-padX*2);
+      var y = padTop + slot[a.key]*plotH;
+      coords[a.key]={x:x,y:y};
+    });
+    pathD = 'M'+coords.valadon.x+','+coords.valadon.y+' L'+coords.becker.x+','+coords.becker.y+' L'+coords.hesse.x+','+coords.hesse.y;
+    var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',pathD); path.setAttribute('fill','none');
+    path.setAttribute('stroke','url(#agrad)'); path.setAttribute('stroke-width','1.2'); path.setAttribute('stroke-dasharray','3 4');
+    var defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+    defs.innerHTML='<linearGradient id="agrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9823a"/><stop offset="1" stop-color="#9e3b26"/></linearGradient>';
+    svg.appendChild(defs); svg.appendChild(path); overlay.appendChild(svg);
+
+    D.anchors.forEach(function(a){
+      var c = coords[a.key];
+      var el = document.createElement('div');
+      el.className='bt-anchor'; el.style.left=c.x+'px'; el.style.top=c.y+'px'; el.style.setProperty('--c',colr[a.key]);
+      var labelTop = a.key==='hesse';
+      el.innerHTML='<div class="bt-anchor__ring" tabindex="0" role="button" aria-label="'+a.en+' '+a.birth+'–'+a.death+'"></div>'+
+        '<div class="bt-anchor__label" style="'+(labelTop?'bottom:20px':'top:20px')+'"><span class="zh">'+a.zh+'</span><span class="yr">'+a.birth+'–'+a.death+'</span></div>';
+      overlay.appendChild(el);
+    });
+  }
+
+  function buildAxis(){
+    var ax = document.getElementById('fieldAxis'); ax.innerHTML='';
+    [1850,1880,1910,1940,1970].forEach(function(y){
+      var s=document.createElement('span'); s.textContent=y; ax.appendChild(s);
+    });
+  }
+  document.getElementById('fieldStat').innerHTML =
+    '共 <b>'+D.scatter.total.toLocaleString()+'</b> 位艺术家 · 女性仅 <b>'+
+    Math.round(D.scatter.n_f/D.scatter.total*100)+'%</b>';
+  document.getElementById('fieldToggle').addEventListener('click', function(){
+    isolate = !isolate; this.setAttribute('aria-pressed', isolate?'true':'false');
+    this.textContent = isolate ? '看全部 · show all' : '只看女性 · isolate women';
+    drawField();
+  });
+
+  /* ===================== CHRONOLOGY (curved lifelines) ===================== */
+  var plot = document.getElementById('chronoPlot');
+  var detail = document.getElementById('chronoDetail');
+  var laneColor = {becker:'var(--amber-500)', hesse:'var(--rust-500)', world:'var(--ink-300)'};
+  var selectedKey = 'becker:1906';
+  var SVGNS='http://www.w3.org/2000/svg';
+  function el(tag,attrs){var e=document.createElementNS(SVGNS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  // Catmull-Rom → cubic bézier (smooth curve through the valence points)
+  function smooth(pts){
+    if(pts.length<2) return '';
+    var d='M'+pts[0].x.toFixed(1)+','+pts[0].y.toFixed(1);
+    for(var i=0;i<pts.length-1;i++){
+      var p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+      var c1x=p1.x+(p2.x-p0.x)/6,c1y=p1.y+(p2.y-p0.y)/6;
+      var c2x=p2.x-(p3.x-p1.x)/6,c2y=p2.y-(p3.y-p1.y)/6;
+      d+=' C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2.x.toFixed(1)+','+p2.y.toFixed(1);
+    }
+    return d;
+  }
+
+  function buildChrono(){
+    var w = plot.clientWidth, h = plot.clientHeight;
+    if(w<2 || h<2) return;                 // guard: never blank on a 0-size rebuild
+    plot.innerHTML='';
+    var padX=12, baseline=h*0.50, amp=h*0.32, worldY=h*0.085;
+    function X(y){ return padX + pct(y)*(w-padX*2); }
+    function Y(v){ return baseline - v*amp; }
+    var svg = el('svg',{width:'100%',height:'100%'});
+    svg.style.position='absolute'; svg.style.inset='0'; svg.style.overflow='visible';
+    var defs=document.createElementNS(SVGNS,'defs');
+    defs.innerHTML =
+      '<pattern id="shoah" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="6" stroke="#7a2c19" stroke-width="2"/></pattern>'+
+      '<linearGradient id="fillBecker" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9823a" stop-opacity="0.14"/><stop offset="1" stop-color="#b9823a" stop-opacity="0"/></linearGradient>'+
+      '<linearGradient id="fillHesse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9e3b26" stop-opacity="0.13"/><stop offset="1" stop-color="#9e3b26" stop-opacity="0"/></linearGradient>';
+    svg.appendChild(defs);
+
+    // --- war bands (kept as-is: vertical shaded columns) ---
+    D.wars.forEach(function(war){
+      var shoah = war.kind==='shoah';
+      svg.appendChild(el('rect',{x:X(war.from),y:0,width:X(war.to)-X(war.from),height:h,
+        fill: shoah?'url(#shoah)':'#1c1813', opacity: shoah?0.5:0.08}));
+      var lab=el('text',{x:(X(war.from)+X(war.to))/2, y: shoah?12:h-6, 'text-anchor':'middle',
+        fill: shoah?'#7a2c19':'#7a6f60','font-family':'var(--font-mono)','font-size':'9.5','letter-spacing':'0.1em'});
+      lab.textContent=war.label; svg.appendChild(lab);
+    });
+
+    // --- posthumous connector: Becker's severed thread → 1937 purge ---
+    var bDeath = D.lives.becker.points[D.lives.becker.points.length-1];
+    svg.appendChild(el('path',{d:'M'+X(bDeath.y)+','+Y(bDeath.v)+' C'+X(1918)+','+(h*0.16)+' '+X(1930)+','+(worldY+24)+' '+X(1937)+','+(worldY+6),
+      fill:'none', stroke:'#9e3b26','stroke-width':'1','stroke-dasharray':'2 5','opacity':'0.5'}));
+
+    // --- the two life curves ---
+    Object.keys(D.lives).forEach(function(key){
+      var life=D.lives[key], col=life.color;
+      var sp=life.points.map(function(p){ return {x:X(p.y), y:Y(p.v)}; });
+      var line=smooth(sp);
+      // soft area fill down to the floor (terrain feel)
+      var area=line+' L'+sp[sp.length-1].x.toFixed(1)+','+h+' L'+sp[0].x.toFixed(1)+','+h+' Z';
+      svg.appendChild(el('path',{d:area, fill:key==='becker'?'url(#fillBecker)':'url(#fillHesse)', stroke:'none'}));
+      svg.appendChild(el('path',{d:line, fill:'none', stroke:col,'stroke-width':'2.2','stroke-linecap':'round','stroke-linejoin':'round'}));
+      // birth node (open ring)
+      svg.appendChild(el('circle',{cx:sp[0].x, cy:sp[0].y, r:4, fill:'var(--bg-page)', stroke:col,'stroke-width':'1.6'}));
+      // death cut (×) at the last point
+      var last=sp[sp.length-1];
+      ['45','-45'].forEach(function(rot){
+        svg.appendChild(el('line',{x1:last.x-6,y1:last.y,x2:last.x+6,y2:last.y,stroke:'#9e3b26','stroke-width':'1.6',transform:'rotate('+rot+' '+last.x+' '+last.y+')'}));
+      });
+      // name label near birth
+      var nm=el('text',{x:sp[0].x, y:sp[0].y-14, fill:'#2c251d','font-family':'var(--font-serif-cjk)','font-size':'12.5'});
+      nm.textContent=life.nameZh; svg.appendChild(nm);
+    });
+    plot.appendChild(svg);
+
+    // --- clickable nodes ON the curves (HTML for interaction) ---
+    function addNode(p, lane){
+      var x=X(p.y), y = lane==='world' ? worldY : Y(p.v);
+      var b=document.createElement('button');
+      var cls='bt-evt'+(lane==='world'?' bt-evt--world':'')+(p.star?' bt-evt--star':'')+(p.cut?' bt-evt--cut':'');
+      b.className=cls; b.style.left=x+'px'; b.style.top=y+'px';
+      b.style.setProperty('--c', laneColor[lane]);
+      b.dataset.key=lane+':'+p.y; b.setAttribute('aria-label', p.y+' '+p.t);
+      b.__node=p; b.__lane=lane;
+      b.addEventListener('click', function(){ selectNode(b); });
+      b.addEventListener('mouseenter', function(){ selectNode(b); });
+      plot.appendChild(b);
+    }
+    D.lives.becker.points.forEach(function(p){ addNode(p,'becker'); });
+    D.lives.hesse.points.forEach(function(p){ addNode(p,'hesse'); });
+    D.world.forEach(function(p){ addNode(p,'world'); });
+
+    // restore current selection after a rebuild
+    var def = plot.querySelector('[data-key="'+selectedKey+'"]') || plot.querySelector('[data-key="becker:1906"]');
+    if(def) selectNode(def);
+  }
+
+  function selectNode(b){
+    var p=b.__node, lane=b.__lane; selectedKey=b.dataset.key;
+    Array.prototype.forEach.call(plot.querySelectorAll('.bt-evt'), function(n){ n.setAttribute('aria-selected', n===b?'true':'false'); });
+    var laneLabel={becker:'Becker', hesse:'Hesse', world:'世界 · World'}[lane];
+    detail.innerHTML =
+      '<div class="bt-detail__year" style="color:'+(p.cut?'var(--rust-500)':'var(--ink-500)')+'">'+p.y+
+        '<span class="lane" style="color:'+laneColor[lane]+'">'+laneLabel+(p.cut?' · ✂':'')+(p.star?' · ◆':'')+'</span></div>'+
+      '<div class="bt-detail__body"><h4>'+p.t+'</h4><div class="en">'+p.te+'</div><p>'+p.d+'</p></div>';
+  }
+
+  /* ===================== DIPTYCH ===================== */
+  /* ---- Theme-Twins data: hardcoded means / palettes / 18 works ---- */
+  var TT_FEATURES=[
+    {key:'warm_ratio',zh:'暖色比',en:'warm ratio'},
+    {key:'saturation_mean',zh:'饱和度',en:'saturation'},
+    {key:'unique_color_ratio',zh:'色彩丰度',en:'colour range'},
+    {key:'value_mean',zh:'明度',en:'brightness'},
+    {key:'edge_density',zh:'边缘密度',en:'edge density'},
+    {key:'corner_density',zh:'角点密度',en:'corner density'}
+  ];
+  var TT_MEANS={
+    becker:{warm_ratio:0.4935,saturation_mean:0.3477,unique_color_ratio:0.4838,value_mean:0.5313,edge_density:0.0610,corner_density:0.0091},
+    hesse:{warm_ratio:0.2308,saturation_mean:0.2456,unique_color_ratio:0.2598,value_mean:0.6197,edge_density:0.0793,corner_density:0.0149}
+  };
+  var TT_PAL={
+    becker:['#855d45','#b9835d','#c9bcaa','#7f9893','#4e4b42','#302d2a'],
+    hesse:['#e8e3db','#cabba7','#b19244','#a39681','#665c4e','#302e29']
+  };
+  var TT_WORKS=[
+    {a:'becker',warm_ratio:0.5084,saturation_mean:0.2273,unique_color_ratio:0.3588,value_mean:0.4061,edge_density:0.0257,corner_density:0.0065},
+    {a:'becker',warm_ratio:0.5695,saturation_mean:0.2625,unique_color_ratio:0.4046,value_mean:0.5666,edge_density:0.0185,corner_density:0.0044},
+    {a:'becker',warm_ratio:0.3431,saturation_mean:0.4138,unique_color_ratio:0.4282,value_mean:0.4559,edge_density:0.0216,corner_density:0.0074},
+    {a:'becker',warm_ratio:0.2064,saturation_mean:0.3731,unique_color_ratio:0.5099,value_mean:0.5290,edge_density:0.0547,corner_density:0.0095},
+    {a:'becker',warm_ratio:0.5488,saturation_mean:0.4443,unique_color_ratio:0.5044,value_mean:0.5502,edge_density:0.0236,corner_density:0.0105},
+    {a:'becker',warm_ratio:0.5929,saturation_mean:0.3856,unique_color_ratio:0.6156,value_mean:0.4973,edge_density:0.0712,corner_density:0.0072},
+    {a:'becker',warm_ratio:0.3883,saturation_mean:0.3143,unique_color_ratio:0.7187,value_mean:0.3984,edge_density:0.1111,corner_density:0.0090},
+    {a:'becker',warm_ratio:0.7190,saturation_mean:0.3637,unique_color_ratio:0.6858,value_mean:0.4910,edge_density:0.1289,corner_density:0.0134},
+    {a:'becker',warm_ratio:0.5792,saturation_mean:0.4926,unique_color_ratio:0.7505,value_mean:0.5911,edge_density:0.1170,corner_density:0.0174},
+    {a:'becker',warm_ratio:0.4372,saturation_mean:0.2841,unique_color_ratio:0.2506,value_mean:0.6334,edge_density:0.0443,corner_density:0.0022},
+    {a:'becker',warm_ratio:0.7449,saturation_mean:0.3701,unique_color_ratio:0.3111,value_mean:0.4997,edge_density:0.0934,corner_density:0.0132},
+    {a:'becker',warm_ratio:0.2849,saturation_mean:0.2410,unique_color_ratio:0.2672,value_mean:0.7571,edge_density:0.0225,corner_density:0.0090},
+    {a:'hesse',warm_ratio:0.3618,saturation_mean:0.3016,unique_color_ratio:0.3343,value_mean:0.7120,edge_density:0.0741,corner_density:0.0046},
+    {a:'hesse',warm_ratio:0.1383,saturation_mean:0.3628,unique_color_ratio:0.4350,value_mean:0.4735,edge_density:0.0797,corner_density:0.0109},
+    {a:'hesse',warm_ratio:0.1679,saturation_mean:0.1635,unique_color_ratio:0.2272,value_mean:0.5929,edge_density:0.0834,corner_density:0.0132},
+    {a:'hesse',warm_ratio:0.6321,saturation_mean:0.2209,unique_color_ratio:0.1658,value_mean:0.7759,edge_density:0.0662,corner_density:0.0210},
+    {a:'hesse',warm_ratio:0.0732,saturation_mean:0.3457,unique_color_ratio:0.3573,value_mean:0.5192,edge_density:0.0849,corner_density:0.0092},
+    {a:'hesse',warm_ratio:0.0115,saturation_mean:0.0791,unique_color_ratio:0.0391,value_mean:0.6444,edge_density:0.0874,corner_density:0.0308}
+  ];
+  var TT_RANGE={};
+  TT_FEATURES.forEach(function(f){var vs=TT_WORKS.map(function(w){return w[f.key];});TT_RANGE[f.key]={min:Math.min.apply(null,vs),max:Math.max.apply(null,vs)};});
+  function ttNorm(v,fk){var r=TT_RANGE[fk];return r.max===r.min?0:(v-r.min)/(r.max-r.min);}
+  function ttFmt(v){return v.toFixed(3);}
+  function ttWarm(hex){return (parseInt(hex.slice(1,3),16)-parseInt(hex.slice(5,7),16))/255;}
+
+  // hover state shared between compass and legend
+  var ttGuide=[], ttArcGroup=[], ttArcVals=[], ttTicks=[], ttLegRows=[];
+  function ttSetHover(i){
+    ttGuide.forEach(function(c,j){ c.setAttribute('stroke-width', i===j?1.4:0.8); c.setAttribute('opacity', (i===null||i===j)?0.9:0.4); });
+    ttArcGroup.forEach(function(g,j){ g.setAttribute('opacity', (i!==null&&i!==j)?0.28:1); });
+    ttArcVals.forEach(function(g,j){ g.style.display=(i===j)?'':'none'; });
+    ttTicks.forEach(function(arr,j){ arr.forEach(function(c){ c.setAttribute('opacity', i===null?0.5:(i===j?0.5:0.12)); }); });
+    ttLegRows.forEach(function(row,j){ row.classList.toggle('is-on', i===j); });
+  }
+
+  /* ---- GravidCompass: 双圆罗盘 ---- */
+  function buildCompass(){
+    var svg=document.getElementById('gravidCompass'); if(!svg) return;
+    svg.innerHTML=''; ttGuide=[]; ttArcGroup=[]; ttArcVals=[]; ttTicks=[];
+    var CX=300,CY=300,R_OUT=252,R_IN=84,SPREAD=150,N=TT_FEATURES.length;
+    var RADII=TT_FEATURES.map(function(_,i){return R_OUT-i*(R_OUT-R_IN)/(N-1);});
+    function pol(r,deg){var a=deg*Math.PI/180;return [CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+    function arcPath(r,len,dir){var s=pol(r,-90),e=pol(r,-90+dir*len);var large=Math.abs(len)>180?1:0;var sweep=dir>0?1:0;return 'M '+s[0].toFixed(2)+' '+s[1].toFixed(2)+' A '+r+' '+r+' 0 '+large+' '+sweep+' '+e[0].toFixed(2)+' '+e[1].toFixed(2);}
+    RADII.forEach(function(r){ var c=el('circle',{cx:CX,cy:CY,r:r,fill:'none',stroke:'var(--data-grid)','stroke-width':0.8,opacity:0.9}); svg.appendChild(c); ttGuide.push(c); });
+    svg.appendChild(el('line',{x1:CX,y1:CY-R_OUT-26,x2:CX,y2:CY+R_OUT+26,stroke:'var(--thread-faint)','stroke-width':1,'stroke-dasharray':'2 5'}));
+    var cap=el('text',{x:CX,y:CY-R_OUT-34,'text-anchor':'middle','class':'gc-axis-cap'}); cap.textContent='脐带 · the axis'; svg.appendChild(cap);
+    TT_FEATURES.forEach(function(){ ttTicks.push([]); });
+    TT_WORKS.forEach(function(w){
+      TT_FEATURES.forEach(function(f,fi){
+        var v=ttNorm(w[f.key],f.key), dir=w.a==='becker'?-1:1, p=pol(RADII[fi],-90+dir*v*SPREAD);
+        var c=el('circle',{cx:p[0],cy:p[1],r:1.7,fill:w.a==='becker'?'var(--amber-700)':'var(--rust-700)',opacity:0.5});
+        svg.appendChild(c); ttTicks[fi].push(c);
+      });
+    });
+    TT_FEATURES.forEach(function(f,i){
+      var r=RADII[i], lenB=ttNorm(TT_MEANS.becker[f.key],f.key)*SPREAD, lenH=ttNorm(TT_MEANS.hesse[f.key],f.key)*SPREAD;
+      var g=el('g',{opacity:1}); g.style.transition='opacity .3s var(--ease-thread)';
+      if(lenB>0.6){ g.appendChild(el('path',{d:arcPath(r,lenB,-1),fill:'none',stroke:'var(--amber-500)','stroke-width':8,'stroke-linecap':'round'})); var pb=pol(r,-90-lenB); g.appendChild(el('circle',{cx:pb[0],cy:pb[1],r:3.4,fill:'var(--amber-700)'})); }
+      if(lenH>0.6){ g.appendChild(el('path',{d:arcPath(r,lenH,1),fill:'none',stroke:'var(--rust-500)','stroke-width':8,'stroke-linecap':'round'})); var ph=pol(r,-90+lenH); g.appendChild(el('circle',{cx:ph[0],cy:ph[1],r:3.4,fill:'var(--rust-700)'})); }
+      svg.appendChild(g); ttArcGroup.push(g);
+      var vg=el('g',{'class':'gc-vals'}); vg.style.display='none';
+      var pb2=pol(r,-90-lenB), ph2=pol(r,-90+lenH);
+      var tb=el('text',{x:pb2[0]-10,y:pb2[1]-8,'text-anchor':'end'}); tb.textContent=ttFmt(TT_MEANS.becker[f.key]);
+      var th=el('text',{x:ph2[0]+10,y:ph2[1]-8,'text-anchor':'start'}); th.textContent=ttFmt(TT_MEANS.hesse[f.key]);
+      vg.appendChild(tb); vg.appendChild(th); svg.appendChild(vg); ttArcVals.push(vg);
+    });
+    svg.appendChild(el('circle',{cx:CX,cy:CY,r:26,fill:'none',stroke:'var(--ink-500)','stroke-width':1}));
+    svg.appendChild(el('circle',{cx:CX,cy:CY-9,r:14,fill:'none',stroke:'var(--ink-500)','stroke-width':1}));
+    svg.appendChild(el('circle',{cx:CX,cy:CY,r:2.4,fill:'var(--ink-700)'}));
+    var hw=(R_OUT-R_IN)/(N-1);
+    RADII.forEach(function(r,i){
+      var h=el('circle',{cx:CX,cy:CY,r:r,fill:'none',stroke:'transparent','stroke-width':hw});
+      h.style.cursor='pointer'; h.style.pointerEvents='stroke';
+      h.addEventListener('mouseenter',function(){ttSetHover(i);});
+      h.addEventListener('mouseleave',function(){ttSetHover(null);});
+      svg.appendChild(h);
+    });
+  }
+
+  /* ---- FeatureLegend: 编号精读 ---- */
+  function buildLegend(){
+    var ul=document.getElementById('featureLegend'); if(!ul) return;
+    ul.innerHTML=''; ttLegRows=[]; ul.addEventListener('mouseleave',function(){ttSetHover(null);});
+    TT_FEATURES.forEach(function(f,i){
+      var nB=ttNorm(TT_MEANS.becker[f.key],f.key), nH=ttNorm(TT_MEANS.hesse[f.key],f.key);
+      var li=document.createElement('li'); li.className='leg-row';
+      li.innerHTML='<span class="leg-idx">'+('0'+(i+1)).slice(-2)+'</span>'+
+        '<span class="leg-name"><span class="zh">'+f.zh+'</span><span class="en">'+f.en+'</span></span>'+
+        '<span class="leg-bar"><span class="leg-bar__half leg-bar__half--l"><span class="leg-fill leg-fill--b" style="width:'+(nB*100)+'%"></span></span>'+
+        '<span class="leg-bar__half leg-bar__half--r"><span class="leg-fill leg-fill--h" style="width:'+(nH*100)+'%"></span></span></span>'+
+        '<span class="leg-vals"><span class="b">'+ttFmt(TT_MEANS.becker[f.key])+'</span><span class="h">'+ttFmt(TT_MEANS.hesse[f.key])+'</span></span>';
+      li.addEventListener('mouseenter',function(){ttSetHover(i);});
+      ul.appendChild(li); ttLegRows.push(li);
+    });
+  }
+
+  /* ---- PaletteOrbit: 主导色环 ---- */
+  function buildOrbits(){
+    var wrap=document.getElementById('paletteOrbits'); if(!wrap) return; wrap.innerHTML='';
+    buildOrbit(wrap,'becker','assets/artworks/becker-self-portrait-hat-veil.jpg','center 26%','Modersohn-Becker','主导色 · 12 works','戴帽与面纱的自画像','Self-Portrait with Hat & Veil','1906');
+    buildOrbit(wrap,'hesse','assets/artworks/hesse-expanded-expansion.jpg','center','Eva Hesse','主导色 · 6 works','扩张的扩张','Expanded Expansion','1969');
+  }
+  function buildOrbit(wrap,artist,src,objPos,nameZh,nameEn,workZh,workEn,year){
+    var accent=artist==='becker'?'var(--amber-500)':'var(--rust-500)';
+    var cols=TT_PAL[artist].map(function(hex){return {hex:hex,w:ttWarm(hex)};}).sort(function(a,b){return b.w-a.w;});
+    var VBp=404,C=202,R_IMG=102,R_RING=138,SW=30,R_LAB=167,N=cols.length,GAP=5,UNIT=360/N,SEG=UNIT-GAP,A0=-90+GAP/2;
+    function pol(r,deg){var a=deg*Math.PI/180;return [C+r*Math.cos(a),C+r*Math.sin(a)];}
+    function seg(r,a0,a1){var s=pol(r,a0),e=pol(r,a1);return 'M '+s[0].toFixed(2)+' '+s[1].toFixed(2)+' A '+r+' '+r+' 0 0 1 '+e[0].toFixed(2)+' '+e[1].toFixed(2);}
+    var imgD=(R_IMG*2/VBp*100)+'%';
+    var fig=document.createElement('figure'); fig.className='orb orb--'+artist;
+    var stage=document.createElement('div'); stage.className='orb-stage';
+    var img=document.createElement('img'); img.className='orb-art'; img.src=src; img.alt=workEn;
+    img.style.width=imgD; img.style.height=imgD; img.style.objectPosition=objPos; stage.appendChild(img);
+    var svg=el('svg',{viewBox:'0 0 '+VBp+' '+VBp,'class':'orb-svg'});
+    svg.appendChild(el('circle',{cx:C,cy:C,r:R_IMG+2,fill:'none',stroke:'var(--border-hair)','stroke-width':1,opacity:0.7}));
+    var groups=[];
+    cols.forEach(function(c,i){
+      var a0=A0+i*UNIT, a1=a0+SEG, mid=(a0+a1)/2, lp=pol(R_LAB,mid);
+      var g=el('g',{opacity:1}); g.style.transition='opacity .25s var(--ease-thread)';
+      var path=el('path',{d:seg(R_RING,a0,a1),fill:'none',stroke:c.hex,'stroke-width':SW,'stroke-linecap':'butt'});
+      path.style.cursor='pointer'; path.style.transition='stroke-width .25s var(--ease-thread)';
+      var txt=el('text',{x:lp[0],y:lp[1],'text-anchor':'middle','dominant-baseline':'middle','class':'orb-hex'}); txt.textContent=c.hex.toUpperCase();
+      g.appendChild(path); g.appendChild(txt); svg.appendChild(g);
+      groups.push({g:g,path:path,txt:txt,hex:c.hex});
+      path.addEventListener('mouseenter',function(){setOrb(i);});
+    });
+    svg.addEventListener('mouseleave',function(){setOrb(null);});
+    var wp=pol(R_RING,A0-1), cp=pol(R_RING,A0+N*UNIT-GAP+1);
+    var wt=el('text',{x:wp[0],y:wp[1],'class':'orb-pole','text-anchor':'middle','dominant-baseline':'middle'}); wt.textContent='暖';
+    var ct=el('text',{x:cp[0],y:cp[1],'class':'orb-pole','text-anchor':'middle','dominant-baseline':'middle'}); ct.textContent='冷';
+    svg.appendChild(wt); svg.appendChild(ct); stage.appendChild(svg); fig.appendChild(stage);
+    var cap=document.createElement('figcaption'); cap.className='orb-cap';
+    cap.innerHTML='<span class="orb-cap__name" style="border-color:'+accent+'"><span class="zh">'+nameZh+'</span><span class="en">'+nameEn+'</span></span>'+
+      '<span class="orb-cap__work"><em>'+workZh+'</em> · '+workEn+' · <span class="yr">'+year+'</span></span>'+
+      '<span class="orb-cap__read">主导色 6 · 色温 暖 → 冷 warm to cool</span>';
+    fig.appendChild(cap); wrap.appendChild(fig);
+    var readEl=cap.querySelector('.orb-cap__read'), DEF='主导色 6 · 色温 暖 → 冷 warm to cool';
+    function setOrb(i){
+      groups.forEach(function(s,j){ s.g.setAttribute('opacity',(i!==null&&i!==j)?0.4:1); s.path.setAttribute('stroke-width', i===j?SW+7:SW); s.txt.classList.toggle('is-on', i===j); });
+      if(i===null) readEl.textContent=DEF;
+      else readEl.innerHTML='<span class="dot" style="background:'+groups[i].hex+'"></span>'+groups[i].hex.toUpperCase();
+    }
+  }
+  function buildMoma(){
+    var grid=document.getElementById('momaGrid');
+    function col(who,whoEn,color,data){
+      var max=Math.max.apply(null,data.map(function(d){return d.n;}));
+      var rows=data.map(function(d){
+        return '<div class="bt-moma__row"><span class="name">'+d.name+'</span>'+
+          '<div class="bt-moma__track"><i style="width:'+(d.n/max*100)+'%;background:'+color+'"></i></div>'+
+          '<span class="n">'+d.n+'</span></div>';
+      }).join('');
+      return '<div class="bt-moma__col"><div class="who" style="color:'+color+'">'+who+' · '+whoEn+'</div>'+rows+'</div>';
+    }
+    grid.innerHTML = col('贝克尔','BECKER','var(--amber-700)',D.departments.becker) +
+                     col('黑塞','HESSE','var(--rust-700)',D.departments.hesse);
+  }
+
+  /* ===================== scroll rail + reveal ===================== */
+  function rail(){
+    var sc=document.documentElement, max=sc.scrollHeight-sc.clientHeight;
+    var p=max>0?sc.scrollTop/max:0;
+    document.getElementById('railFill').style.height=(p*100)+'%';
+    var cut=document.getElementById('railCut');
+    cut.style.top=(p*100)+'%'; cut.style.opacity=p>0.98?'1':'0';
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(node){ io.observe(node); });
+  // fail-safe: if the observer never fires (odd embeddings), reveal everything anyway
+  setTimeout(function(){ document.querySelectorAll('.reveal:not(.in)').forEach(function(n){ n.classList.add('in'); }); }, 2200);
+
+  /* ===================== init + resize ===================== */
+  function buildAll(){
+    drawField(); layoutAnchors(); buildAxis(); buildChrono();
+  }
+  buildCompass(); buildLegend(); buildOrbits(); buildMoma();
+  buildAll();
+  window.addEventListener('scroll', rail, {passive:true}); rail();
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(buildAll,180); });
+})();
+</script>
+</body>
+</html>
